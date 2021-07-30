@@ -82,7 +82,6 @@ describe('SignUp Controller', () => {
       }
     }
     const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
   })
   test('Should return 400 if no password is provided', async () => {
@@ -96,8 +95,7 @@ describe('SignUp Controller', () => {
       }
     }
     const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('password'))
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
   })
   test('Should return 400 if no passwordConfirmation is provided', async () => {
     const { sut } = makeSut()
@@ -167,7 +165,6 @@ describe('SignUp Controller', () => {
       return new Promise((resolve, reject) => reject(new Error()))
     })
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse).toEqual(serverError(new ServerError('error')))
   })
   test('Should return 200 if valid data is provided', async () => {
